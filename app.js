@@ -49,6 +49,8 @@ function maybeSpawnShootingStar(nightOpacity) {
 }
 
 function drawShootingStars(opacity) {
+  if (opacity <= 0) return;
+  maybeSpawnShootingStar(opacity);
   for (let i = shootingStars.length - 1; i >= 0; i--) {
     const s = shootingStars[i];
     s.x += Math.cos(s.angle) * s.speed;
@@ -93,7 +95,7 @@ function drawShootingStars(opacity) {
 function drawStars(opacity) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (opacity <= 0) {
-    shootingStars.length = 0; // clear when daytime
+    shootingStars.length = 0;
     return;
   }
   const t = Date.now() / 1000;
@@ -104,8 +106,6 @@ function drawStars(opacity) {
     ctx.fillStyle = `rgba(200, 215, 255, ${a})`;
     ctx.fill();
   }
-  maybeSpawnShootingStar(opacity);
-  drawShootingStars(opacity);
 }
 
 function resizeCanvas() {
@@ -288,7 +288,10 @@ function updateCelestial() {
       `radial-gradient(circle at 40% 38%, #fff9c4 0%, ${style.color} 50%, ${style.glowColor} 100%)`;
   }
 
+  // Stars - always draw if night, never if day
+  const starOpacity = night ? 1 : 0;
   drawStars(starOpacity);
+  drawShootingStars(starOpacity);
 }
 
 // ── Animation loop ─────────────────────────────────────
