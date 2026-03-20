@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#05071a">
+</head>
+<body>
+  <div class="sky">
+    <canvas id="stars"></canvas>
+    <div class="celestial" id="celestial"></div>
+    <div class="title">Digital Clock</div>
+    <div class="clock-wrapper">
+      <div class="clock">
+        <span id="hours">12</span><span class="colon">:</span><span id="minutes">00</span>
+        <span class="ampm" id="ampm">AM</span>
+      </div>
+      <div class="date" id="date">Friday, March 20</div>
+    </div>
+    <div class="horizon"></div>
+  </div>
+  <script src="app.js"></script>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('SW registered'))
+        .catch(err => console.log('SW error:', err));
+    }
+  </script>
+  
+</body>
+</html>
