@@ -32,26 +32,19 @@ body {
   pointer-events: none;
 }
 
-/* Sky transitions */
-.sky.daytime {
-  background: radial-gradient(ellipse at 70% 30%, #87ceeb 0%, #4a90d9 40%, #1a5fa8 100%);
-}
-.sky.nighttime {
-  background: radial-gradient(ellipse at 70% 40%, #1a2a4a 0%, #0a1228 40%, #05071a 100%);
-}
+/* Sky - gradient controlled by JS */
 .sky {
   transition: background 2s ease;
 }
 
-/* Shared celestial body */
+/* Shared celestial body - position controlled by JS */
 .celestial {
   position: absolute;
-  top: 8%;
-  right: 12%;
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  transition: all 1.5s ease;
+  transition: opacity 2s ease, width 2s ease, height 2s ease, background 2s ease;
+  z-index: 2;
 }
 
 /* Moon */
