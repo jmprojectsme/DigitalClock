@@ -22,28 +22,29 @@ function initStars() {
 const shootingStars = [];
 
 function spawnShootingStar() {
-  // subtle slow-falling star, diagonal drift
   shootingStars.push({
-    x: Math.random() * canvas.width * 1.2 - canvas.width * 0.1,
-    y: Math.random() * canvas.height * 0.5, // spawn in upper half
-    len: Math.random() * 80 + 40,           // tail length
-    speed: Math.random() * 1.2 + 0.5,       // slow & subtle
-    angle: (Math.PI / 4) + (Math.random() - 0.5) * 0.3, // ~45deg diagonal
-    alpha: Math.random() * 0.5 + 0.4,
-    life: 1.0,                               // fade out over time
-    decay: Math.random() * 0.008 + 0.004,   // slow fade
+    x: Math.random() * canvas.width * 0.8,
+    y: Math.random() * canvas.height * 0.4,
+    len: Math.random() * 140 + 80,
+    speed: Math.random() * 4 + 3,
+    angle: (Math.PI / 4) + (Math.random() - 0.5) * 0.4,
+    alpha: Math.random() * 0.4 + 0.7,
+    life: 1.0,
+    decay: Math.random() * 0.018 + 0.012,
   });
 }
 
 // Spawn a new shooting star occasionally
 let shootingStarTimer = 0;
+let nextSpawn = 60; // first one appears within ~1 second
 function maybeSpawnShootingStar(nightOpacity) {
   if (nightOpacity <= 0) return;
   shootingStarTimer++;
-  // random spawn roughly every 3-8 seconds (at 60fps)
-  if (shootingStarTimer > Math.random() * 300 + 180) {
+  if (shootingStarTimer >= nextSpawn) {
     spawnShootingStar();
+    if (Math.random() < 0.3) spawnShootingStar(); // occasional double
     shootingStarTimer = 0;
+    nextSpawn = Math.random() * 180 + 60; // every 1-4 seconds
   }
 }
 
@@ -65,21 +66,26 @@ function drawShootingStars(opacity) {
 
     const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
     grad.addColorStop(0, `rgba(255, 255, 255, 0)`);
-    grad.addColorStop(0.7, `rgba(200, 220, 255, ${a * 0.5})`);
+    grad.addColorStop(0.6, `rgba(180, 210, 255, ${a * 0.6})`);
     grad.addColorStop(1, `rgba(255, 255, 255, ${a})`);
 
     ctx.beginPath();
     ctx.moveTo(tailX, tailY);
     ctx.lineTo(s.x, s.y);
     ctx.strokeStyle = grad;
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.stroke();
 
-    // tiny bright head
+    // bright glowing head
     ctx.beginPath();
-    ctx.arc(s.x, s.y, 1.5, 0, Math.PI * 2);
+    ctx.arc(s.x, s.y, 3, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255, 255, 255, ${a})`;
+    ctx.fill();
+    // outer glow
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(180, 210, 255, ${a * 0.3})`;
     ctx.fill();
   }
 }
