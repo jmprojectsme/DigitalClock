@@ -6,9 +6,8 @@
   <title>Digital Clock</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#05071a">
+  <meta name="theme-color" content="#05071a">
 </head>
 <body>
   <div class="sky">
@@ -25,7 +24,6 @@
     <div class="horizon"></div>
   </div>
   <script src="app.js"></script>
-  
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
@@ -33,6 +31,5 @@
         .catch(err => console.log('SW error:', err));
     }
   </script>
-  
 </body>
 </html>
