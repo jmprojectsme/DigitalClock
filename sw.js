@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digital-clock-v1';
+const CACHE_NAME = 'digital-clock-v2';
 const ASSETS = [
   './',
   './index.html',
